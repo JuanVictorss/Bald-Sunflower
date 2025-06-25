@@ -31,14 +31,28 @@ const maximoErros = 7;
 let somSilenciadoGlobal = false;
 
 const bancoDePalavras = [
-  { palavra: "girassol", dica: "Uma flor que segue o sol." },
-  { palavra: "margarida", dica: "Uma flor simples e campestre." },
-  { palavra: "rosa", dica: "Uma flor clássica, símbolo do amor." },
-  { palavra: "tulipa", dica: "Uma flor com formato de taça." },
-  { palavra: "orquidea", dica: "Uma flor exótica e elegante." },
-  { palavra: "jardim", dica: "Local onde as flores crescem." },
-  { palavra: "primavera", dica: "Estação das flores." },
+  { palavra: "guitarra", dica: "Instrumento musical de cordas" },
+  { palavra: "elefante", dica: "Maior mamífero terrestre" },
+  { palavra: "astronauta", dica: "Profissional que viaja ao espaço" },
+  { palavra: "pizza", dica: "Comida italiana muito popular" },
+  { palavra: "dinossauro", dica: "Animal pré-histórico extinto" },
+  { palavra: "computador", dica: "Dispositivo eletrônico de processamento" },
+  { palavra: "brasil", dica: "Maior país da América do Sul" },
+  { palavra: "caneta", dica: "Usado para escrever com tinta" },
+  { palavra: "palmeiras", dica: "Time de futebol brasileiro" },
+  { palavra: "cinderela", dica: "Princesa famosa da Disney" },
+  { palavra: "sorvete", dica: "Sobremesa gelada" },
+  { palavra: "camaleão", dica: "Animal que muda de cor" },
+  { palavra: "avião", dica: "Meio de transporte aéreo" },
+  { palavra: "xadrez", dica: "Jogo de tabuleiro estratégico" },
+  { palavra: "arcoiris", dica: "Fenômeno com várias cores no céu" },
+  { palavra: "bicicleta", dica: "Meio de transporte com pedais" },
+  { palavra: "baleia", dica: "Maior animal do oceano" },
+  { palavra: "relógio", dica: "Serve para marcar as horas" },
+  { palavra: "harrypotter", dica: "Bruxo famoso da literatura e cinema" },
+  { palavra: "internet", dica: "Rede global de computadores" }
 ];
+
 
 const imagensFlor = [
   "images/girassol/flor_7.png",
@@ -90,9 +104,7 @@ function exibirTela(telaParaExibir) {
 
 function iniciarJogo(palavra, dica) {
   palavraAtual = palavra
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .toLowerCase();
   dicaAtual = dica;
   letrasAdivinhadas = [];
   errosCometidos = 0;
@@ -217,28 +229,12 @@ botaoDoisJogadores.addEventListener("click", () => {
 botaoIniciarDoisJogadores.addEventListener("click", () => {
   const palavraSecreta = campoPalavraSecreta.value.trim();
   const dica = campoDica.value.trim();
-  if (palavraSecreta && dica && /^[a-zA-ZçÇ\s]+$/.test(palavraSecreta)) {
+  if (palavraSecreta && dica) {
     iniciarJogo(palavraSecreta, dica);
-  } else {
-    alert(
-      "Por favor, digite uma palavra válida (apenas letras e espaços) e uma dica."
-    );
   }
 });
 
 botaoReiniciarJogo.addEventListener("click", reiniciarJogo);
-
-document.addEventListener("keydown", (evento) => {
-  const letra = evento.key.toLowerCase();
-  if (letra.match(/^[a-zç]$/) && telaJogo.classList.contains("ativo")) {
-    const elementoTecla = document.querySelector(
-      `.tecla[data-letra="${letra}"]`
-    );
-    if (elementoTecla && !elementoTecla.classList.contains("desabilitado")) {
-      elementoTecla.click();
-    }
-  }
-});
 
 exibirTela(telaMenuInicial);
 atualizarEstadoSilenciarBotao();
