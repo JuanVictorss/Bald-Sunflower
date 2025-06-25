@@ -1,0 +1,235 @@
+body {
+  font-family: "Arial", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url("/images/fundo/cenario.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  margin: 0;
+}
+
+.conteiner-principal {
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+}
+
+h1,
+h2 {
+  color: #ffffff;
+}
+
+#logo-principal {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+}
+
+button {
+  background-color: #8bc34a;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  margin: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #689f38;
+}
+
+#botao-reiniciar-jogo {
+  transition: opacity 0.4s ease;
+}
+
+input[type="text"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.conteiner-flor {
+  margin-bottom: 20px;
+  margin-top: 200x;
+  display: flex;
+  justify-content: center;
+  height: 200px;
+}
+
+#imagem-flor {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
+
+#exibicao-dica {
+  background-color: #ffc107;
+  border-radius: 5px;
+  font-style: italic;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.exibicao-palavra {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+
+.caixa-letra {
+  border-bottom: 3px solid #4caf50;
+  width: 40px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+#teclado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.fileira-teclado {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tecla {
+  background-color: #ffc107;
+  color: #333;
+  border: none;
+  padding: 10px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tecla:hover:not(.desabilitado) {
+  background-color: #ffb300;
+  transform: translateY(-2px);
+}
+
+.tecla.desabilitado {
+  background-color: #ff0000;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.tecla.correta {
+  background-color: #4caf50;
+  color: white;
+}
+
+#mensagem {
+  margin-top: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #e91e63;
+  min-height: 1.5em;
+}
+
+.tela {
+  display: none;
+}
+
+.tela.ativo {
+  display: block;
+}
+
+.escondido {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#tela-menu-inicial {
+  padding: 30px;
+  border-radius: 8px;
+}
+
+#tela-menu-inicial h2 {
+  color: #2e7d32;
+  margin-bottom: 25px;
+}
+
+#tela-menu-inicial button {
+  margin: 10px auto;
+  display: block;
+  width: 200px;
+}
+
+@media (max-width: 600px) {
+  .conteiner-principal {
+    width: 95%;
+    padding: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  #logo-principal {
+    max-width: 250px;
+  }
+
+  .conteiner-flor {
+    margin-top: 30px;
+    height: 150px;
+  }
+
+  #imagem-flor {
+    width: 150px;
+    height: 150px;
+  }
+
+  .exibicao-palavra {
+    font-size: 1.5em;
+    gap: 5px;
+  }
+
+  .caixa-letra {
+    width: 32px;
+    height: 42px;
+  }
+
+  .teclado {
+    gap: 5px;
+  }
+
+  .tecla {
+    width: 32px;
+    height: 38px;
+    font-size: 0.8em;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+}
