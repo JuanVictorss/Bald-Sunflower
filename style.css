@@ -12,6 +12,57 @@ body {
   width: 100%;
   height: auto;
 }
+#tela-jogo {
+  position: relative;
+}
+
+#exibicao-pontuacao-total {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #8bc34a;
+  border-radius: 5px;
+  font-style: italic;
+  margin-bottom: 15px;
+  padding: 7px;
+  color: #333;
+  font-size: 1.8em;
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+}
+
+#botao-silenciar {
+  /* POSICIONAMENTO FIXO NA TELA */
+  position: fixed; /* Posição fixa em relação à janela do navegador */
+  top: 20px; /* Distância de 20px do topo */
+  left: 20px; /* Distância de 20px da esquerda */
+  z-index: 1000; /* Garante que o botão fique na frente de tudo */
+
+  /* Estilo visual do botão (mantém o que já tínhamos) */
+  background-color: transparent;
+  border: 2px solid #888;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+}
+
+#botao-silenciar #icone-som {
+  opacity: 0.4;
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+}
+
+#botao-silenciar.selecionado {
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+#botao-silenciar.selecionado #icone-som {
+  opacity: 1;
+}
 
 .conteiner-principal {
   padding: 30px;
@@ -80,7 +131,15 @@ input[type="text"] {
   border-radius: 5px;
   font-style: italic;
   margin-bottom: 15px;
+  padding: 7px;
   color: #333;
+}
+
+#div-vitoria img {
+  max-width: 450px;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
 }
 
 .exibicao-palavra {
@@ -95,7 +154,7 @@ input[type="text"] {
 }
 
 .caixa-letra {
-  border-bottom: 3px solid #4caf50;
+  border-bottom: 3px solid #000000;
   width: 40px;
   height: 50px;
   display: flex;
@@ -155,8 +214,22 @@ input[type="text"] {
   margin-top: 20px;
   font-size: 1.2em;
   font-weight: bold;
-  color: #e91e63;
+  border-radius: 5px;
+  font-style: italic;
+  margin-bottom: 15px;
+  color: #333;
   min-height: 1.5em;
+  background-color: #8bc34a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+}
+
+#mensagem:empty {
+  background-color: transparent;
 }
 
 .tela {
@@ -201,7 +274,7 @@ input[type="text"] {
     background-position: center center;
     margin: 0;
     width: 100%;
-    height: auto ;
+    height: auto;
   }
   .conteiner-principal {
     width: 80%;
@@ -235,7 +308,7 @@ input[type="text"] {
 
   .exibicao-palavra {
     font-size: 1.5em;
-    gap: 2px;
+    gap: 6px;
   }
 
   .caixa-letra {

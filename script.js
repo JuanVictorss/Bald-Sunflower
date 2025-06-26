@@ -1,6 +1,7 @@
 const telaMenuInicial = document.getElementById("tela-menu-inicial");
 const botaoJogar = document.getElementById("botao-jogar");
 const botaoSilenciar = document.getElementById("botao-silenciar");
+const iconeSom = document.getElementById("icone-som");
 const musicaMenu = document.getElementById("musica-menu");
 const musicaJogo = document.getElementById("musica-jogo");
 const tituloPrincipal = document.getElementById("titulo-principal");
@@ -21,13 +22,18 @@ const exibicaoDica = document.getElementById("exibicao-dica");
 const exibicaoPalavra = document.getElementById("exibicao-palavra");
 const teclado = document.getElementById("teclado");
 const mensagem = document.getElementById("mensagem");
-const botaoReiniciarJogo = document.getElementById("botao-reiniciar-jogo");
+const botaoProximaAcao = document.getElementById("botao-proxima-acao");
+const exibicaoPontuacaoTotal = document.getElementById(
+  "exibicao-pontuacao-total"
+);
 
 let palavraAtual = "";
 let dicaAtual = "";
 let letrasAdivinhadas = [];
 let errosCometidos = 0;
 const maximoErros = 7;
+let pontuacaoTotal = 0;
+let listaDePalavrasAtual = [];
 let somSilenciadoGlobal = false;
 
 const bancoDePalavras = [
@@ -45,14 +51,13 @@ const bancoDePalavras = [
   { palavra: "camaleão", dica: "Animal que muda de cor" },
   { palavra: "avião", dica: "Meio de transporte aéreo" },
   { palavra: "xadrez", dica: "Jogo de tabuleiro estratégico" },
-  { palavra: "arcoiris", dica: "Fenômeno com várias cores no céu" },
+  { palavra: "arcoíris", dica: "Fenômeno com várias cores no céu" },
   { palavra: "bicicleta", dica: "Meio de transporte com pedais" },
   { palavra: "baleia", dica: "Maior animal do oceano" },
   { palavra: "relógio", dica: "Serve para marcar as horas" },
   { palavra: "harrypotter", dica: "Bruxo famoso da literatura e cinema" },
-  { palavra: "internet", dica: "Rede global de computadores" }
+  { palavra: "internet", dica: "Rede global de computadores" },
 ];
-
 
 const imagensFlor = [
   "images/girassol/flor_7.png",
@@ -64,6 +69,11 @@ const imagensFlor = [
   "images/girassol/flor_1.png",
   "images/girassol/flor_0.png",
 ];
+
+// --- ADICIONADO: Função para normalizar letras ---
+function removerAcentos(texto) {
+  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
 function tocarMusica(musica) {
   if (!somSilenciadoGlobal) {
@@ -77,11 +87,16 @@ function pararMusica(musica) {
 }
 
 function atualizarEstadoSilenciarBotao() {
-  botaoSilenciar.textContent = somSilenciadoGlobal
-    ? "Ativar Som"
-    : "Silenciar Som";
+  if (somSilenciadoGlobal) {
+    // Adiciona a classe que ativa o estilo de "selecionado"
+    botaoSilenciar.classList.add("selecionado");
+    botaoSilenciar.title = "Ativar Som";
+  } else {
+    // Remove a classe, voltando ao estilo padrão
+    botaoSilenciar.classList.remove("selecionado");
+    botaoSilenciar.title = "Silenciar Som";
+  }
 }
-
 function exibirTela(telaParaExibir) {
   const telas = document.querySelectorAll(".tela");
   telas.forEach((tela) => tela.classList.remove("ativo"));
@@ -102,27 +117,57 @@ function exibirTela(telaParaExibir) {
   }
 }
 
+function calcularPontuacaoDaRodada() {
+  const pontuacaoBaseRodada = 100;
+  const penalidadePorErro = pontuacaoBaseRodada / maximoErros;
+  const pontuacaoRodada = Math.max(
+    0,
+    pontuacaoBaseRodada - errosCometidos * penalidadePorErro
+  );
+  return Math.floor(pontuacaoRodada);
+}
+
+function comecarNovoJogo(palavra, dica) {
+  pontuacaoTotal = 0;
+  exibicaoPontuacaoTotal.textContent = pontuacaoTotal;
+
+  if (palavra && dica) {
+    listaDePalavrasAtual = [{ palavra, dica }];
+  } else {
+    listaDePalavrasAtual = [...bancoDePalavras].sort(() => Math.random() - 0.5);
+  }
+  iniciarProximaFase();
+}
+
+function iniciarProximaFase() {
+  const proximaPalavraInfo = listaDePalavrasAtual.shift();
+  iniciarJogo(proximaPalavraInfo.palavra, proximaPalavraInfo.dica);
+}
+
 function iniciarJogo(palavra, dica) {
-  palavraAtual = palavra
-    .toLowerCase();
+  palavraAtual = palavra.toLowerCase();
   dicaAtual = dica;
   letrasAdivinhadas = [];
   errosCometidos = 0;
+
   mensagem.textContent = "";
-  botaoReiniciarJogo.classList.add("escondido");
+  exibicaoPontuacaoTotal.textContent = pontuacaoTotal;
+  botaoProximaAcao.classList.add("escondido");
   imagemFlor.src = imagensFlor[0];
   exibicaoDica.textContent = `Dica: ${dicaAtual}`;
+
   renderizarExibicaoPalavra();
   gerarTeclado();
   exibirTela(telaJogo);
 }
 
+// --- MODIFICADO: Para lidar com acentos ---
 function renderizarExibicaoPalavra() {
   exibicaoPalavra.innerHTML = "";
   palavraAtual.split("").forEach((letra) => {
     const caixaLetra = document.createElement("div");
     caixaLetra.classList.add("caixa-letra");
-    if (letrasAdivinhadas.includes(letra) || letra === " ") {
+    if (letrasAdivinhadas.includes(removerAcentos(letra)) || letra === " ") {
       caixaLetra.textContent = letra;
       if (letra === " ") caixaLetra.style.borderBottom = "none";
     } else {
@@ -132,9 +177,10 @@ function renderizarExibicaoPalavra() {
   });
 }
 
+// --- MODIFICADO: Adicionado 'ç' ao teclado ---
 function gerarTeclado() {
   teclado.innerHTML = "";
-  const fileiras = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+  const fileiras = ["qwertyuiop", "asdfghjklç", "zxcvbnm"];
   fileiras.forEach((fileira) => {
     const divFileira = document.createElement("div");
     divFileira.classList.add("fileira-teclado");
@@ -150,6 +196,7 @@ function gerarTeclado() {
   });
 }
 
+// --- MODIFICADO: Para lidar com acentos ---
 function lidarComAdivinhacao(evento) {
   const letraAdivinhada = evento.target.dataset.letra;
   if (evento.target.classList.contains("desabilitado")) return;
@@ -157,7 +204,7 @@ function lidarComAdivinhacao(evento) {
   letrasAdivinhadas.push(letraAdivinhada);
   evento.target.classList.add("desabilitado");
 
-  if (palavraAtual.includes(letraAdivinhada)) {
+  if (removerAcentos(palavraAtual).includes(letraAdivinhada)) {
     evento.target.classList.add("correta");
     renderizarExibicaoPalavra();
     verificarVitoria();
@@ -165,34 +212,55 @@ function lidarComAdivinhacao(evento) {
     errosCometidos++;
     const indiceImagem = Math.min(errosCometidos, imagensFlor.length - 1);
     imagemFlor.src = imagensFlor[indiceImagem];
-    mensagem.textContent = `Que pena! A letra "${letraAdivinhada.toUpperCase()}" não está na palavra.`;
     verificarDerrota();
   }
 }
 
+// --- MODIFICADO: Para lidar com acentos ---
 function verificarVitoria() {
-  if (
-    palavraAtual
-      .split("")
-      .every((letra) => letrasAdivinhadas.includes(letra) || letra === " ")
-  ) {
-    mensagem.textContent = "Parabéns! Você acertou a palavra!";
+  const vitoria = palavraAtual
+    .split("")
+    .every(
+      (letra) =>
+        letrasAdivinhadas.includes(removerAcentos(letra)) || letra === " "
+    );
+
+  if (vitoria) {
     finalizarJogo(true);
   }
 }
 
 function verificarDerrota() {
   if (errosCometidos >= maximoErros) {
-    mensagem.textContent = `Fim de jogo! A palavra era: "${palavraAtual.toUpperCase()}".`;
     finalizarJogo(false);
   }
 }
 
-function finalizarJogo() {
+function finalizarJogo(vitoria) {
   document
     .querySelectorAll(".tecla")
     .forEach((tecla) => tecla.classList.add("desabilitado"));
-  botaoReiniciarJogo.classList.remove("escondido");
+  botaoProximaAcao.classList.remove("escondido");
+
+  if (vitoria) {
+    const pontosGanhos = calcularPontuacaoDaRodada();
+    pontuacaoTotal += pontosGanhos;
+    exibicaoPontuacaoTotal.textContent = pontuacaoTotal;
+    mensagem.textContent = `Você acertou! Ganhou +${pontosGanhos} pontos.`;
+
+    if (listaDePalavrasAtual.length > 0) {
+      botaoProximaAcao.textContent = "Próxima Fase";
+      botaoProximaAcao.onclick = iniciarProximaFase;
+    } else {
+      mensagem.textContent = `Parabéns! Pontuação Final: ${pontuacaoTotal}`;
+      botaoProximaAcao.textContent = "Jogar Novamente";
+      botaoProximaAcao.onclick = reiniciarJogo;
+    }
+  } else {
+    mensagem.textContent = `A palavra era: "${palavraAtual.toUpperCase()}.`;
+    botaoProximaAcao.textContent = "Jogar Novamente";
+    botaoProximaAcao.onclick = reiniciarJogo;
+  }
 }
 
 function reiniciarJogo() {
@@ -217,9 +285,7 @@ botaoSilenciar.addEventListener("click", () => {
 });
 
 botaoUmJogador.addEventListener("click", () => {
-  const { palavra, dica } =
-    bancoDePalavras[Math.floor(Math.random() * bancoDePalavras.length)];
-  iniciarJogo(palavra, dica);
+  comecarNovoJogo();
 });
 
 botaoDoisJogadores.addEventListener("click", () => {
@@ -230,11 +296,9 @@ botaoIniciarDoisJogadores.addEventListener("click", () => {
   const palavraSecreta = campoPalavraSecreta.value.trim();
   const dica = campoDica.value.trim();
   if (palavraSecreta && dica) {
-    iniciarJogo(palavraSecreta, dica);
+    comecarNovoJogo(palavraSecreta, dica);
   }
 });
-
-botaoReiniciarJogo.addEventListener("click", reiniciarJogo);
 
 exibirTela(telaMenuInicial);
 atualizarEstadoSilenciarBotao();

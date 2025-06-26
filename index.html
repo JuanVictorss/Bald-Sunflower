@@ -8,6 +8,13 @@
   </head>
   <body>
     <div class="conteiner-principal">
+      <button id="botao-silenciar" title="Silenciar Som">
+        <img
+          id="icone-som"
+          src="/images/outros/volume-mute.png"
+          alt="Ícone de Som"
+        />
+      </button>
       <h1 id="titulo-principal">
         <img
           id="logo-principal"
@@ -17,7 +24,6 @@
       </h1>
       <div id="tela-menu-inicial" class="tela ativo">
         <button id="botao-jogar">Jogar</button>
-        <button id="botao-silenciar">Silenciar Som</button>
         <audio id="musica-menu" loop muted>
           <source
             src="/sounds/Crazy Dave (Intro Theme).mp3"
@@ -44,17 +50,22 @@
       </div>
 
       <div id="tela-jogo" class="tela">
-        <p id="mensagem"></p>
-        <button id="botao-reiniciar-jogo" class="escondido">
+        <b>
+          <p id="mensagem"></p>
+        </b>
+        <p id="exibicao-pontuacao-total"></p>
+
+        <button id="botao-proxima-acao" class="escondido">
           Jogar Novamente
         </button>
         <div class="conteiner-flor">
           <img id="imagem-flor" src="" alt="Imagem do Girassol" />
         </div>
-        <p id="exibicao-dica"></p>
+        <b>
+          <p id="exibicao-dica"></p>
+        </b>
         <div id="exibicao-palavra" class="exibicao-palavra"></div>
         <div id="teclado" class="teclado"></div>
-        <p id="mensagem"></p>
         <audio id="musica-jogo" loop>
           <source
             src="/sounds/Graze the Roof (In-Game).mp3"
