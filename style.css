@@ -120,9 +120,6 @@ input[type="text"] {
 }
 
 #exibicao-pontuacao-total {
-  position: absolute;
-  top: 85px;
-  right: 20px;
   background-color: #8bc34a;
   border-radius: 8px;
   font-style: italic;
@@ -260,7 +257,11 @@ p {
   display: none;
 }
 
-@media (min-width: 900px) {
+#logo-principal {
+  max-width: 250px;
+}
+
+@media (max-width: 900px) {
   .conteiner-principal {
     width: 80%;
     margin-top: 30px;
@@ -283,15 +284,232 @@ p {
     font-size: 1.5em;
     gap: 6px;
   }
+}
+
+@media (max-width: 768px) {
+  .conteiner-principal {
+    width: 85%;
+  }
+
+  #logo-principal {
+    max-width: 220px;
+  }
+
+  .conteiner-flor {
+    height: 110px;
+  }
+
+  #imagem-flor {
+    width: 110px;
+    height: 110px;
+  }
+
+  .exibicao-palavra {
+    font-size: 1.4em;
+    gap: 5px;
+  }
 
   .caixa-letra {
-    width: 32px;
-    height: 42px;
+    width: 28px;
+    height: 40px;
+  }
+
+  .fileira-teclado {
+    gap: 0;
   }
 
   .tecla {
-    width: 32px;
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+    font-size: 0.9em;
+
+    border-radius: 0;
+    border: none;
+
+    margin-right: -1px;
+  }
+
+  .fileira-teclado .tecla:last-child {
+    margin-right: 0;
+  }
+
+  .fileira-teclado:first-child .tecla:first-child {
+    border-top-left-radius: 6px;
+  }
+  .fileira-teclado:first-child .tecla:last-child {
+    border-top-right-radius: 6px;
+  }
+  .fileira-teclado:last-child .tecla:first-child {
+    border-bottom-left-radius: 6px;
+  }
+  .fileira-teclado:last-child .tecla:last-child {
+    border-bottom-right-radius: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .conteiner-principal {
+    width: 90%;
+    margin-top: 20px;
+  }
+
+  #logo-principal {
+    max-width: 200px;
+  }
+
+  .conteiner-flor {
+    height: 100px;
+  }
+
+  #imagem-flor {
+    width: 100px;
+    height: 100px;
+  }
+
+  .exibicao-palavra {
+    font-size: 1.3em;
+  }
+
+  .caixa-letra {
+    width: 25px;
     height: 38px;
-    font-size: 0.8em;
+  }
+
+  .tecla {
+    height: 45px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 540px) {
+  .conteiner-principal {
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+    margin-top: 40px;
+  }
+
+  #logo-principal {
+    max-width: 190px;
+  }
+
+  .conteiner-flor {
+    height: 95px;
+  }
+
+  #imagem-flor {
+    width: 95px;
+    height: 95px;
+  }
+
+  .exibicao-palavra {
+    font-size: 1.25em;
+    gap: 4px;
+  }
+
+  .caixa-letra {
+    width: 24px;
+    height: 38px;
+  }
+
+  #teclado {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .fileira-teclado {
+    display: flex;
+    width: 100%;
+    gap: 0;
+  }
+
+  .tecla {
+    flex: 1;
+    min-width: 0;
+    height: 48px;
+    font-size: 1em;
+    border-radius: 0;
+    border: none;
+  }
+
+  .fileira-teclado:first-child .tecla:first-child {
+    border-top-left-radius: 6px;
+  }
+  .fileira-teclado:first-child .tecla:last-child {
+    border-top-right-radius: 6px;
+  }
+  .fileira-teclado:last-child .tecla:first-child {
+    border-bottom-left-radius: 6px;
+  }
+  .fileira-teclado:last-child .tecla:last-child {
+    border-bottom-right-radius: 6px;
+  }
+}
+
+@media (max-width: 400px) {
+  .conteiner-principal {
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin-top: 50px;
+  }
+
+  #logo-principal {
+    max-width: 180px;
+  }
+
+  .conteiner-flor {
+    height: 90px;
+  }
+
+  #imagem-flor {
+    width: 90px;
+    height: 90px;
+  }
+
+  .exibicao-palavra {
+    font-size: 1.2em;
+    gap: 4px;
+  }
+
+  .caixa-letra {
+    width: 22px;
+    height: 35px;
+  }
+
+  #teclado {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .fileira-teclado {
+    display: flex;
+    width: 100%;
+    gap: 0;
+  }
+
+  .tecla {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 45px;
+    font-size: 1em;
+    border-radius: 0;
+    border: none;
+  }
+
+  .fileira-teclado:first-child .tecla:first-child {
+    border-top-left-radius: 6px;
+  }
+  .fileira-teclado:first-child .tecla:last-child {
+    border-top-right-radius: 6px;
+  }
+  .fileira-teclado:last-child .tecla:first-child {
+    border-bottom-left-radius: 6px;
+  }
+  .fileira-teclado:last-child .tecla:last-child {
+    border-bottom-right-radius: 6px;
   }
 }

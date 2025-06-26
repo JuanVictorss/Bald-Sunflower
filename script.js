@@ -145,7 +145,7 @@ function calcularPontuacaoDaRodada() {
 
 function comecarNovoJogo(palavra, dica) {
   pontuacaoTotal = 0;
-  exibicaoPontuacaoTotal.textContent = pontuacaoTotal;
+  exibicaoPontuacaoTotal.textContent = "score: " + pontuacaoTotal;
 
   if (palavra && dica) {
     listaDePalavrasAtual = [{ palavra, dica }];
@@ -167,7 +167,7 @@ function iniciarJogo(palavra, dica) {
   errosCometidos = 0;
 
   mensagem.textContent = "";
-  exibicaoPontuacaoTotal.textContent = pontuacaoTotal;
+  exibicaoPontuacaoTotal.textContent = "score: " + pontuacaoTotal;
   botaoProximaAcao.classList.add("escondido");
   imagemFlor.src = imagensFlor[0];
   exibicaoDica.textContent = `Dica: ${dicaAtual}`;
@@ -210,6 +210,17 @@ function gerarTeclado() {
   });
 }
 
+function tremerFlor() {
+  var opcoes = {
+    times: 3,
+    distance: 10,
+  };
+
+  var duracao = 400;
+
+  $("#imagem-flor").effect("shake", opcoes, duracao);
+}
+
 function lidarComAdivinhacao(evento) {
   const letraAdivinhada = evento.target.dataset.letra;
   if (evento.target.classList.contains("desabilitado")) return;
@@ -222,6 +233,8 @@ function lidarComAdivinhacao(evento) {
     renderizarExibicaoPalavra();
     verificarVitoria();
   } else {
+    tremerFlor();
+
     errosCometidos++;
     const indiceImagem = Math.min(errosCometidos, imagensFlor.length - 1);
     imagemFlor.src = imagensFlor[indiceImagem];
@@ -257,7 +270,7 @@ function finalizarJogo(vitoria) {
   if (vitoria) {
     const pontosGanhos = calcularPontuacaoDaRodada();
     pontuacaoTotal += pontosGanhos;
-    exibicaoPontuacaoTotal.textContent = pontuacaoTotal;
+    exibicaoPontuacaoTotal.textContent = "score: " + pontuacaoTotal;
     mensagem.textContent = `Você acertou! Ganhou +${pontosGanhos} pontos.`;
 
     if (listaDePalavrasAtual.length > 0) {
