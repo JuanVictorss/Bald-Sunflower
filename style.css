@@ -4,7 +4,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url("/images/fundo/cenario.png");
+  background-image: url("./images/fundo/cenario.png");
   background-size: cover;
   background-attachment: fixed;
   background-position: center center;
