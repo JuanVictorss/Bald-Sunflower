@@ -8,38 +8,39 @@
   </head>
   <body>
     <div class="conteiner-principal">
-      <button id="botao-silenciar" title="Silenciar Som">
-        <img
-          id="icone-som"
-          src="/images/outros/volume-mute.png"
-          alt="Ícone de Som"
-        />
-      </button>
+      <div class="conteiner-botoes-topo">
+        <button id="botao-silenciar" title="Silenciar Som">
+          <img
+            id="icone-som"
+            src="/images/outros/volume-mute.png"
+            alt="Ícone de Som"
+          />
+        </button>
 
-      <button
-        id="botao-home"
-        class="botao-navegacao escondido"
-        title="Voltar ao Início"
-      >
-        <img
-          id="icone-home"
-          src="/images/outros/web-house.png"
-          alt="Ícone de casa"
-        />
-      </button>
+        <button
+          id="botao-home"
+          class="botao-navegacao escondido"
+          title="Voltar ao Início"
+        >
+          <img
+            id="icone-home"
+            src="/images/outros/web-house.png"
+            alt="Ícone de casa"
+          />
+        </button>
 
-      <button
-        id="botao-voltar"
-        class="botao-navegacao escondido"
-        title="Voltar"
-      >
-        <img
-          id="icone-voltar"
-          src="/images/outros/voltar.png"
-          alt="Ícone seta para esquerda"
-        />
-      </button>
-
+        <button
+          id="botao-voltar"
+          class="botao-navegacao escondido"
+          title="Voltar"
+        >
+          <img
+            id="icone-voltar"
+            src="/images/outros/voltar.png"
+            alt="Ícone seta para esquerda"
+          />
+        </button>
+      </div>
       <h1 id="titulo-principal">
         <img
           id="logo-principal"
@@ -77,20 +78,20 @@
       </div>
 
       <div id="tela-jogo" class="tela">
+        <p id="exibicao-pontuacao-total"></p>
         <b>
           <p id="mensagem"></p>
         </b>
-        <p id="exibicao-pontuacao-total"></p>
 
         <button id="botao-proxima-acao" class="escondido">
           Jogar Novamente
         </button>
-        <div class="conteiner-flor">
-          <img id="imagem-flor" src="" alt="Imagem do Girassol" />
-        </div>
         <b>
           <p id="exibicao-dica"></p>
         </b>
+        <div class="conteiner-flor">
+          <img id="imagem-flor" src="" alt="Imagem do Girassol" />
+        </div>
         <div id="exibicao-palavra" class="exibicao-palavra"></div>
         <div id="teclado" class="teclado"></div>
         <audio id="musica-jogo" loop>
