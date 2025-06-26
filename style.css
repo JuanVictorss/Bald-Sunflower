@@ -58,6 +58,10 @@ input[type="text"] {
   transition: all 0.2s ease-in-out;
 }
 
+#botao-silenciar:hover {
+  background-color: #d9534f;
+}
+
 #botao-silenciar #icone-som {
   opacity: 0.4;
   width: 35px;
@@ -77,8 +81,6 @@ input[type="text"] {
 .botao-navegacao {
   position: fixed;
   z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 2px solid #fff;
   color: white;
   width: 50px;
   height: 50px;
@@ -89,10 +91,11 @@ input[type="text"] {
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s;
+  padding: 5px;
 }
 
 .botao-navegacao:hover {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: #689f38;
 }
 
 .botao-navegacao img {
@@ -146,7 +149,7 @@ input[type="text"] {
   object-fit: contain;
 }
 
-#exibicao-dica {
+p {
   background-color: #ffc107;
   border-radius: 5px;
   font-style: italic;
