@@ -8,14 +8,12 @@ const tituloPrincipal = document.getElementById("titulo-principal");
 const telaSelecaoJogadores = document.getElementById("tela-selecao-jogadores");
 const botaoUmJogador = document.getElementById("botao-um-jogador");
 const botaoDoisJogadores = document.getElementById("botao-dois-jogadores");
-
 const telaEntradaPalavra = document.getElementById("tela-entrada-palavra");
 const campoPalavraSecreta = document.getElementById("campo-palavra-secreta");
 const campoDica = document.getElementById("campo-dica");
 const botaoIniciarDoisJogadores = document.getElementById(
   "botao-iniciar-dois-jogadores"
 );
-
 const telaJogo = document.getElementById("tela-jogo");
 const imagemFlor = document.getElementById("imagem-flor");
 const exibicaoDica = document.getElementById("exibicao-dica");
@@ -26,6 +24,10 @@ const botaoProximaAcao = document.getElementById("botao-proxima-acao");
 const exibicaoPontuacaoTotal = document.getElementById(
   "exibicao-pontuacao-total"
 );
+
+const botaoHome = document.getElementById("botao-home");
+const botaoVoltar = document.getElementById("botao-voltar");
+let historicoDeTelas = [];
 
 let palavraAtual = "";
 let dicaAtual = "";
@@ -70,7 +72,6 @@ const imagensFlor = [
   "images/girassol/flor_0.png",
 ];
 
-// --- ADICIONADO: Função para normalizar letras ---
 function removerAcentos(texto) {
   return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -88,16 +89,20 @@ function pararMusica(musica) {
 
 function atualizarEstadoSilenciarBotao() {
   if (somSilenciadoGlobal) {
-    // Adiciona a classe que ativa o estilo de "selecionado"
     botaoSilenciar.classList.add("selecionado");
     botaoSilenciar.title = "Ativar Som";
   } else {
-    // Remove a classe, voltando ao estilo padrão
     botaoSilenciar.classList.remove("selecionado");
     botaoSilenciar.title = "Silenciar Som";
   }
 }
+
 function exibirTela(telaParaExibir) {
+  if (telaParaExibir === telaMenuInicial) {
+    historicoDeTelas = [];
+  }
+  historicoDeTelas.push(telaParaExibir);
+
   const telas = document.querySelectorAll(".tela");
   telas.forEach((tela) => tela.classList.remove("ativo"));
   telaParaExibir.classList.add("ativo");
@@ -114,6 +119,17 @@ function exibirTela(telaParaExibir) {
   } else {
     pararMusica(musicaJogo);
     tocarMusica(musicaMenu);
+  }
+
+  botaoHome.classList.add("escondido");
+  botaoVoltar.classList.add("escondido");
+
+  if (telaParaExibir === telaJogo) {
+    botaoHome.classList.remove("escondido");
+  }
+
+  if (historicoDeTelas.length > 1) {
+    botaoVoltar.classList.remove("escondido");
   }
 }
 
@@ -161,7 +177,6 @@ function iniciarJogo(palavra, dica) {
   exibirTela(telaJogo);
 }
 
-// --- MODIFICADO: Para lidar com acentos ---
 function renderizarExibicaoPalavra() {
   exibicaoPalavra.innerHTML = "";
   palavraAtual.split("").forEach((letra) => {
@@ -177,7 +192,6 @@ function renderizarExibicaoPalavra() {
   });
 }
 
-// --- MODIFICADO: Adicionado 'ç' ao teclado ---
 function gerarTeclado() {
   teclado.innerHTML = "";
   const fileiras = ["qwertyuiop", "asdfghjklç", "zxcvbnm"];
@@ -196,7 +210,6 @@ function gerarTeclado() {
   });
 }
 
-// --- MODIFICADO: Para lidar com acentos ---
 function lidarComAdivinhacao(evento) {
   const letraAdivinhada = evento.target.dataset.letra;
   if (evento.target.classList.contains("desabilitado")) return;
@@ -216,7 +229,6 @@ function lidarComAdivinhacao(evento) {
   }
 }
 
-// --- MODIFICADO: Para lidar com acentos ---
 function verificarVitoria() {
   const vitoria = palavraAtual
     .split("")
@@ -257,7 +269,7 @@ function finalizarJogo(vitoria) {
       botaoProximaAcao.onclick = reiniciarJogo;
     }
   } else {
-    mensagem.textContent = `A palavra era: "${palavraAtual.toUpperCase()}.`;
+    mensagem.textContent = `A palavra era: "${palavraAtual.toUpperCase()}".`;
     botaoProximaAcao.textContent = "Jogar Novamente";
     botaoProximaAcao.onclick = reiniciarJogo;
   }
@@ -297,6 +309,18 @@ botaoIniciarDoisJogadores.addEventListener("click", () => {
   const dica = campoDica.value.trim();
   if (palavraSecreta && dica) {
     comecarNovoJogo(palavraSecreta, dica);
+  }
+});
+
+botaoHome.addEventListener("click", () => {
+  reiniciarJogo();
+});
+
+botaoVoltar.addEventListener("click", () => {
+  if (historicoDeTelas.length > 1) {
+    historicoDeTelas.pop();
+    const telaAnterior = historicoDeTelas.pop();
+    exibirTela(telaAnterior);
   }
 });
 
